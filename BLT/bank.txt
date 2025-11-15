@@ -1,0 +1,26 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+// A simple bank contract for a single customer's account
+contract BankAccount {
+
+    // Stores the balance of the customer
+    uint public balance;
+
+    // Deposit money into the account
+    function deposit() public payable {
+        balance += msg.value;   // msg.value means the amount of ether sent
+    }
+
+    // Withdraw money from the account
+    function withdraw(uint amount) public {
+        require(amount <= balance, "Insufficient balance");
+        balance -= amount;
+        payable(msg.sender).transfer(amount);   // send Ether back to user
+    }
+
+    // View the current account balance
+    function getBalance() public view returns (uint) {
+        return balance;
+    }
+}
